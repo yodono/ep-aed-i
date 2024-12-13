@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "comparador.h"
 #include "lista_ligada.h"
 
-ListaLigada * cria_lista(){
+ListaLigada * cria_lista_ligada(){
 
 	ListaLigada * lista =  (ListaLigada *) malloc (sizeof(ListaLigada));
 	lista->primeiro = NULL;
@@ -13,10 +12,10 @@ ListaLigada * cria_lista(){
 	return lista;
 }
 
-void destroi_lista(ListaLigada * lista){
+void destroi_lista_ligada(ListaLigada * lista){
 
-	No * p = lista->primeiro;
-	No * tmp;
+	NoLista * p = lista->primeiro;
+	NoLista * tmp;
 
 	while(p){
 		
@@ -28,55 +27,60 @@ void destroi_lista(ListaLigada * lista){
 	free(lista);
 }
 
-int tamanho(ListaLigada * lista){
+int tamanho_lista_ligada(ListaLigada * lista){
   return lista->tamanho;
 }
 
-void imprime(ListaLigada * lista){
+void imprime_lista_ligada(ListaLigada * lista){
 
-	No * p;
+	NoLista * p;
 
 	printf("Lista:");
 
 	for(p = lista->primeiro; p; p = p->proximo){
 
-		printf(" %d", p->valor);
+		printf(" %s", p->elemento->valor);
 	}
 
 	printf("\n");
 }
 
-int busca(ListaLigada * lista, Elemento e){
+int busca_lista_ligada(ListaLigada * lista, Elemento * e){
 
 	int i = 0;
-	No * p = lista->primeiro;
+	NoLista * p = lista->primeiro;
 
-	while(p && lt(p->valor, e)){
+	while(p && lt(p->elemento, e)){
 
 		p = p->proximo;
 		i++;
 	}
-	return p ? (eq(p->valor, e) ? i : -1) : -1;
+	return p ? (eq(p->elemento, e) ? i : -1) : -1;
 }
 
-Boolean insere_distinto(ListaLigada * lista, Indice e){
+Boolean insere_sem_repeticao_lista_ligada(ListaLigada * lista, Elemento * e){
+  return insere_lista_ligada(lista, e, TRUE);
+}
 
-	No * p;
-	No * anterior;
-	No * novo = (No *) malloc(sizeof(No));
+Boolean insere_lista_ligada(ListaLigada * lista, Elemento * e, Boolean semRepeticao){
 
-	novo->valor = e->valor;
+	NoLista * p;
+	NoLista * anterior;
+	NoLista * novo = (NoLista *) malloc(sizeof(NoLista));
 
+	novo->elemento = e;
 	anterior = NULL;
 	p = lista->primeiro;
 
 	while(p){
 
-		if(lt(e, p->valor)) break;
- 	
-    if (eq(e, p->valor)) {
-      return TRUE;
+    if (eq(e, p->elemento) && semRepeticao) {
+      free(e);
+      e = p->elemento;
+      return FALSE;
     }
+
+		if(lt(e, p->elemento)) break;
 
 		anterior = p;
 		p = p->proximo;
@@ -91,12 +95,12 @@ Boolean insere_distinto(ListaLigada * lista, Indice e){
 	return TRUE;
 }
 
-Boolean remove_elemento(ListaLigada * lista, Elemento e){
+Boolean remove_elemento_lista_ligada(ListaLigada * lista, Elemento * e){
 
 	int i, antecessor;
-	int indice = busca(lista, e);
-	No * p;
-	No * tmp;
+	int indice = busca_lista_ligada(lista, e);
+	NoLista * p;
+	NoLista * tmp;
 
 	if(indice >= 0) {
 

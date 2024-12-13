@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
-#include "lista_ligada.h"
+#include "strategy.h"
+#include "lista_occ.h"
 
 #define TAMANHO 10000
 
@@ -15,11 +17,11 @@ int main(int argc, char ** argv){
 	char * palavra;	
 	int contador_linha;
 
-  ListaLigada * lista_ligada = cria_lista();
 
-	if(argc == 2) {
+	if(argc == 3) {
 
 		in = fopen(argv[1], "r");
+    Indexador * indexador = cria_estrategia(argv[2]);
 
 		printf(">>>>> Carregando arquivo...\n");
 
@@ -46,15 +48,20 @@ int main(int argc, char ** argv){
 				// da mesma, uma vez que o ponteiro 'palavra' aponta para uma 
 				// substring dentro da string 'linha', e a cada nova linha lida
 				// o conteúdo da linha anterior é sobreescrito.
-        Indice * indice;
-
-        // TODO: salvar em minusculo
-        strcpy(indice->valor, palavra);
         
-        if (insere_distinto(lista_ligada, indice->valor)) {
-          // TODO: atualiza quantidade
-          // TODO: atualiza ocorrencia
+	      Elemento * novo_elemento = (Elemento *) malloc (sizeof(Elemento));
+        novo_elemento->valor = (char *) malloc(strlen(palavra) + 1);
+        novo_elemento->quantidade = 0;
+
+        strcpy(novo_elemento->valor, palavra);
+        strlwr(novo_elemento->valor);
+
+        if(indexador->insere(indexador->estrutura, novo_elemento) == FALSE) {
+          novo_elemento->ocorrencias = cria_lista_occ();
         }
+
+        novo_elemento->quantidade++;
+        insere_occ_sem_repeticao(novo_elemento->ocorrencias, contador_linha);
 
 				printf("\t\t'%s'\n", palavra);
 			}
@@ -62,14 +69,13 @@ int main(int argc, char ** argv){
 			contador_linha++;
 		}
 
-		printf(">>>>> Arquivo carregado!\n");
+		printf(">>>>> Arquivo carregado!\n\n\n");
 
+    menu_busca(indexador);
+    
     // TODO: copiar lista ligada p lista sequencial
 
-    // TODO: while para menu de opcoes para usuario
-    
-    // TODO: funcao de busca de palavra -> busca binaria na lista sequencial
-
+		printf("\n\n\n>>>>>Fim teste!\n\n\n");
 		return 0;
 	}
 

@@ -1,29 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "comparador.h"
 #include "lista_sequencial_ordenada.h"
 
-ListaSequencial * cria_lista(int capacidade){
+ListaSequencial * cria_lista_sequencial(int capacidade){
 
 	ListaSequencial * lista = (ListaSequencial *) malloc (sizeof(ListaSequencial));
-	lista->a = (Elemento *) malloc (capacidade * sizeof(Elemento));
+	lista->a = (Elemento **) malloc (capacidade * sizeof(Elemento));
 	lista->capacidade = capacidade;
 	lista->livre = 0;
 
 	return lista;
 }
 
-void destroi_lista(ListaSequencial * lista){
+void destroi_lista_sequencial(ListaSequencial * lista){
 	free(lista->a);
 	free(lista);
 }
 
-int tamanho(ListaSequencial * lista){
+int tamanho_lista_sequencial(ListaSequencial * lista){
 	return lista->livre;
 }
 
-void imprime(ListaSequencial * lista){
+void imprime_lista_sequencial(ListaSequencial * lista){
 
 	int i;
 
@@ -31,13 +30,13 @@ void imprime(ListaSequencial * lista){
 
 	for(i = 0; i < lista->livre; i++){
 
-		printf(" %s", lista->a[i]);
+		printf(" %s", lista->a[i]->valor);
 	}
 
 	printf("\n");
 }
 
-int busca(ListaSequencial * lista, Elemento e){
+int busca_lista_sequencial(ListaSequencial * lista, Elemento * e){
 
 	// busca binária! ;)
 
@@ -57,7 +56,7 @@ int busca(ListaSequencial * lista, Elemento e){
 	return -1;
 }
 
-Boolean insere(ListaSequencial * lista, Elemento e){
+Boolean insere_lista_sequencial(ListaSequencial * lista, Elemento * e){
 
 	int i;
 
@@ -76,10 +75,10 @@ Boolean insere(ListaSequencial * lista, Elemento e){
 	return FALSE;
 }
 
-Boolean remove_elemento(ListaSequencial * lista, Elemento e){
+Boolean remove_elemento_lista_sequencial(ListaSequencial * lista, Elemento * e){
 
 	int i;
-	int indice = busca(lista, e);
+	int indice = busca_lista_sequencial(lista, e);
 
 	if(indice >= 0) {
 

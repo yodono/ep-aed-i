@@ -1,27 +1,24 @@
-#define FALSE 0
-#define TRUE 1
-
-typedef int Boolean;
-typedef char * Elemento;
+#include "utils.h"
 
 typedef struct _no_ {
 
-	Elemento valor;
+	Elemento * elemento;
 	struct _no_ * proximo;
 
-} No;
+} NoLista;
 
 typedef struct {
 	
-	No * primeiro;
+	NoLista * primeiro;
   int tamanho;
 
 } ListaLigada;
 
-ListaLigada * cria_lista();
-void destroi_lista(ListaLigada * lista);
-int tamanho(ListaLigada * lista);
-void imprime(ListaLigada * lista);
-int busca(ListaLigada * lista, Elemento e);
-Boolean insere_distinto(ListaLigada * lista, Elemento e);
-Boolean remove_elemento(ListaLigada * lista, Elemento e);
+ListaLigada * cria_lista_ligada();
+void destroi_lista_ligada(ListaLigada * lista);
+int tamanho_lista_ligada(ListaLigada * lista);
+void imprime_lista_ligada(ListaLigada * lista);
+int busca_lista_ligada(ListaLigada * lista, Elemento * e);
+Boolean insere_sem_repeticao_lista_ligada(ListaLigada * lista, Elemento * e);
+Boolean insere_lista_ligada(ListaLigada * lista, Elemento * e, Boolean semRepeticao);
+Boolean remove_elemento_lista_ligada(ListaLigada * lista, Elemento * e);
