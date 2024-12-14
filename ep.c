@@ -17,7 +17,6 @@ int main(int argc, char ** argv){
 	char * palavra;	
 	int contador_linha;
 
-
 	if(argc == 3) {
 
 		in = fopen(argv[1], "r");
@@ -56,12 +55,16 @@ int main(int argc, char ** argv){
         strcpy(novo_elemento->valor, palavra);
         strlwr(novo_elemento->valor);
 
-        if(indexador->insere(indexador->estrutura, novo_elemento) == FALSE) {
+        // indexador->insere retorna TRUE caso o elemento seja novo, FALSE do contrario
+        // indexador->insere atualiza o ponteiro do novo_elemento para o elemento existente caso haja
+        if(indexador->insere(indexador->estrutura, novo_elemento)) {
           novo_elemento->ocorrencias = cria_lista_occ();
+          insere_occ(novo_elemento->ocorrencias, contador_linha);
+        } else {
+          free(novo_elemento);
         }
-
+        
         novo_elemento->quantidade++;
-        insere_occ_sem_repeticao(novo_elemento->ocorrencias, contador_linha);
 
 				printf("\t\t'%s'\n", palavra);
 			}

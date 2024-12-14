@@ -205,7 +205,6 @@ Boolean insere_AVL_rec(Arvore_AVL * arvore, NoArvore * raiz, NoArvore * pai, NoA
 		return TRUE;
 	}
 
-  free(novo->elemento);
   novo->elemento = raiz->elemento;
 	return FALSE;
 }

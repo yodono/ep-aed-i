@@ -45,17 +45,14 @@ void imprime_lista_ligada(ListaLigada * lista){
 	printf("\n");
 }
 
-int busca_lista_ligada(ListaLigada * lista, Elemento * e){
-
-	int i = 0;
+NoLista * busca_lista_ligada(ListaLigada * lista, Elemento * e){
 	NoLista * p = lista->primeiro;
 
 	while(p && lt(p->elemento, e)){
-
 		p = p->proximo;
-		i++;
 	}
-	return p ? (eq(p->elemento, e) ? i : -1) : -1;
+
+	return p ? (eq(p->elemento, e) ? p : NULL) : NULL;
 }
 
 Boolean insere_sem_repeticao_lista_ligada(ListaLigada * lista, Elemento * e){
@@ -75,7 +72,7 @@ Boolean insere_lista_ligada(ListaLigada * lista, Elemento * e, Boolean semRepeti
 	while(p){
 
     if (eq(e, p->elemento) && semRepeticao) {
-      free(e);
+      free(novo);
       e = p->elemento;
       return FALSE;
     }

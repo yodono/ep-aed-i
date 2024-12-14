@@ -3,6 +3,7 @@
 #include <string.h> 
 
 #include "strategy.h"
+#include "lista_occ.h"
 
 Indexador * cria_estrategia(char * tipo) {
 	Indexador * indexador = (Indexador *) malloc (sizeof(Indexador));
@@ -49,9 +50,21 @@ void menu_busca(Indexador * indexador) {
       puts("Encerrando o programa...");
       break;
     }
-      
+        
     if (argumentosLidos == 2 && eq_char(comando, "busca")) {
-      indexador->busca(indexador->estrutura, argumento);
+	    Elemento * aux = (Elemento *) malloc (sizeof(Elemento));
+      aux->valor = argumento;
+      
+      NoGenerico * no = indexador->busca(indexador->estrutura, aux);
+
+      if (no == NULL) {
+        printf("Palavra '%s' nao encontrada.\n", argumento);
+        continue;
+      }
+      
+      printf("Existem %d ocorrencias da palavra '%s' na(s) seguinte(s) linha(s):\n", no->elemento->quantidade, argumento);
+      imprime_occ(no->elemento->ocorrencias);
+
       continue;
     }
       
