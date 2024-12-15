@@ -2,7 +2,7 @@
 #include <stdio.h> 
 #include <string.h> 
 
-#include "strategy.h"
+#include "indexador.h"
 
 Indexador * cria_estrategia(char * tipo) {
 	Indexador * indexador = (Indexador *) malloc (sizeof(Indexador));

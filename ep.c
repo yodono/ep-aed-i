@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 #include "utils.h"
-#include "strategy.h"
+#include "indexador.h"
 #include "lista_occ.h"
 
 int main(int argc, char ** argv){
