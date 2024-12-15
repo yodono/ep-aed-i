@@ -108,13 +108,13 @@ NoArvore * rotacaoR(NoArvore * p){
 	return NULL;
 }
 
-Boolean insere_AVL_rec(Arvore_AVL * arvore, NoArvore * raiz, NoArvore * pai, NoArvore * novo){
+Boolean insere_AVL_rec(Arvore_AVL * arvore, NoArvore * raiz, NoArvore * pai, NoArvore ** novo){
 
 	Boolean r;
 	NoArvore * rot;
 
-	if(neq(novo->elemento, raiz->elemento)){
-		if(lt(novo->elemento, raiz->elemento)){
+	if(neq((*novo)->elemento, raiz->elemento)){
+		if(lt((*novo)->elemento, raiz->elemento)){
 			if(raiz->esq){
 
 				r = insere_AVL_rec(arvore, raiz->esq, raiz, novo);
@@ -133,7 +133,7 @@ Boolean insere_AVL_rec(Arvore_AVL * arvore, NoArvore * raiz, NoArvore * pai, NoA
 				return r;
 			}
 			else {
-				raiz->esq = novo;
+				raiz->esq = *novo;
 				if(!raiz->dir) raiz->h = 1;
 			}
 		}
@@ -156,7 +156,7 @@ Boolean insere_AVL_rec(Arvore_AVL * arvore, NoArvore * raiz, NoArvore * pai, NoA
 				return r; 
 			}
 			else {
-				raiz->dir = novo;
+				raiz->dir = *novo;
 				if(!raiz->esq) raiz->h = 1;
 			}
 		}
@@ -164,7 +164,7 @@ Boolean insere_AVL_rec(Arvore_AVL * arvore, NoArvore * raiz, NoArvore * pai, NoA
 		return TRUE;
 	}
 
-  novo->elemento = raiz->elemento;
+  (*novo)->elemento = raiz->elemento;
 	return FALSE;
 }
 
@@ -176,7 +176,13 @@ Boolean insere_AVL(Arvore_AVL * arvore, Elemento ** e){
 	novo->esq = novo->dir = NULL;
 	novo->h = 0;
 
-	if(arvore->raiz) return insere_AVL_rec(arvore, arvore->raiz, NULL, novo);
+	if(arvore->raiz) {
+    Boolean r = insere_AVL_rec(arvore, arvore->raiz, NULL, &novo);
+
+    *e = novo->elemento;
+
+    return r;
+  } 
 		
 	arvore->raiz = novo;
 	return TRUE;
