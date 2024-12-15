@@ -5,46 +5,12 @@
 
 #include "AVL.h"
 
-///////////////////////////////////////////////////////////////////////////////////////////
-// Funções auxiliares. Não fazem parte do conjunto de operações elementares da estrutura //
-///////////////////////////////////////////////////////////////////////////////////////////
-
-int balanco(NoArvore * no);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Implementações comuns tanto para a árvore binária de "propósito geral", quanto para a árvore binária de busca //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 Arvore_AVL * cria_arvore(){
 
 	Arvore_AVL * arvore = (Arvore_AVL *) malloc (sizeof(Arvore_AVL));
 	arvore->raiz = NULL;	
 	return arvore;
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void imprime_rec(NoArvore * no){
-
-	// percurso in-ordem para a impressão dos elementos
-
-	if(no && no->elemento && no->elemento->valor){
-		imprime_rec(no->esq);
-		printf(" %s", no->elemento->valor);
-		imprime_rec(no->dir);
-	}
-}
-
-void imprime_AVL(Arvore_AVL * arvore){
-
-	printf("Elementos na arvore:");
-	imprime_rec(arvore->raiz);
-	printf("\n");
-}
-
-///////////////////////////////////////////////////////////////
-// Implementações específicas para a árvore binária de busca //
-///////////////////////////////////////////////////////////////
 
 NoArvore * busca_AVL_rec(NoArvore * no, Elemento * e){
 
@@ -60,13 +26,6 @@ NoArvore * busca_AVL_rec(NoArvore * no, Elemento * e){
 NoArvore * busca_AVL(Arvore_AVL * arvore, Elemento * e){
 	
 	return busca_AVL_rec(arvore->raiz, e);	
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-int max(int a, int b){
-
-	return a > b ? a : b;
 }
 
 int balanco(NoArvore * no){
@@ -223,142 +182,3 @@ Boolean insere_AVL(Arvore_AVL * arvore, Elemento * e){
 	return TRUE;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-NoArvore * encontra_menor(NoArvore * raiz){
-
-	if(raiz->esq) return encontra_menor(raiz->esq);
-	
-	return raiz;
-}
-
-NoArvore * encontra_maior(NoArvore * raiz){
-
-	if(raiz->dir) return encontra_maior(raiz->dir);
-	
-	return raiz;
-}
-
-/*
-NoArvore * encontra_pai_ord(NoArvore * raiz, NoArvore * no){
-
-	if(raiz){
-
-		if(raiz->esq == no) return raiz;
-		if(raiz->dir == no) return raiz;
-		if(no->valor < raiz->valor) return encontra_pai_ord(raiz->esq, no);
-		if(no->valor > raiz->valor) return encontra_pai_ord(raiz->dir, no);
-	}
-		
-	return NULL;
-}
-*/
-
-Boolean remove_AVL_rec(Arvore_AVL * arvore, NoArvore * raiz, NoArvore * pai, Elemento * e){
-
-	NoArvore * a_remover;
-	NoArvore * rot;
-	Boolean retorno;
-
-	if(raiz) {
-
-		if(eq(raiz->elemento, e)){
-
-			if(raiz->dir){
-
-				a_remover = encontra_menor(raiz->dir);
-				raiz->elemento = a_remover->elemento;
-				retorno = remove_AVL_rec(arvore, raiz->dir, raiz, a_remover->elemento);
-
-				// atualizar altura da raiz
-				atualiza_altura(raiz);
-
-				if(abs(balanco(raiz)) >= 2){
-					rot = rotacaoL(raiz);
-
-					if(pai){
-						if(pai->esq == raiz) pai->esq = rot;
-						if(pai->dir == raiz) pai->dir = rot;
-					}
-					else arvore->raiz = rot;
-				}
-
-				return retorno;
-			}
-			else if(raiz->esq){
-
-				a_remover = encontra_maior(raiz->esq);
-				raiz->elemento = a_remover->elemento;
-				retorno = remove_AVL_rec(arvore, raiz->esq, raiz, a_remover->elemento);
-
-				// atualizar altura da raiz
-				atualiza_altura(raiz);
-
-				if(abs(balanco(raiz)) >= 2){
-					rot = rotacaoR(raiz);
-
-					if(pai){
-						if(pai->esq == raiz) pai->esq = rot;
-						if(pai->dir == raiz) pai->dir = rot;
-					}
-					else arvore->raiz = rot;
-				}
-			
-				return retorno;
-			}
-			else{
-				if(pai){
-					if(pai->esq == raiz) pai->esq = NULL;
-					if(pai->dir == raiz) pai->dir = NULL;
-					atualiza_altura(pai);
-				}
-				else{
-					arvore->raiz = NULL;
-				}
-
-				free(raiz);
-				return TRUE;
-			}
-		}
-		else if(lt(e, raiz->elemento)){
-
-			retorno = remove_AVL_rec(arvore, raiz->esq, raiz, e);
-			atualiza_altura(raiz);
-
-			if(abs(balanco(raiz)) >= 2){
-				rot = rotacaoR(raiz);
-
-				if(pai){
-					if(pai->esq == raiz) pai->esq = rot;
-					if(pai->dir == raiz) pai->dir = rot;
-				}
-				else arvore->raiz = rot;
-			}
-
-			return retorno;
-		}
-		else {
-			retorno = remove_AVL_rec(arvore, raiz->dir, raiz, e);
-			atualiza_altura(raiz);
-
-			if(abs(balanco(raiz)) >= 2){
-				rot = rotacaoL(raiz);
-
-				if(pai){
-					if(pai->esq == raiz) pai->esq = rot;
-					if(pai->dir == raiz) pai->dir = rot;
-				}
-				else arvore->raiz = rot;
-			}
-
-			return retorno;
-		}
-	}
-
-	return FALSE;
-}
-
-Boolean remove_AVL(Arvore_AVL * arvore, Elemento * e){
-
-	return remove_AVL_rec(arvore, arvore->raiz, NULL, e);
-}

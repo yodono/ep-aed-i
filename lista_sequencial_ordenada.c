@@ -22,20 +22,6 @@ int tamanho_lista_sequencial(ListaSequencial * lista){
 	return lista->livre;
 }
 
-void imprime_lista_sequencial(ListaSequencial * lista){
-
-	int i;
-
-	printf("Lista:");
-
-	for(i = 0; i < lista->livre; i++){
-
-		printf(" %s", lista->a[i]->valor);
-	}
-
-	printf("\n");
-}
-
 int busca_lista_sequencial(ListaSequencial * lista, Elemento * e){
 
 	// busca binária! ;)
@@ -68,26 +54,6 @@ Boolean insere_lista_sequencial(ListaSequencial * lista, Elemento * e){
 
 		lista->a[i] = e;
 		lista->livre++;
-
-		return TRUE;
-	}
-
-	return FALSE;
-}
-
-Boolean remove_elemento_lista_sequencial(ListaSequencial * lista, Elemento * e){
-
-	int i;
-	int indice = busca_lista_sequencial(lista, e);
-
-	if(indice >= 0) {
-
-		lista->livre--;
-
-		for(i = indice; i < lista->livre; i++){
-
-			lista->a[i] = lista->a[i + 1];
-		}
 
 		return TRUE;
 	}

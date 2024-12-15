@@ -31,20 +31,6 @@ int tamanho_lista_ligada(ListaLigada * lista){
   return lista->tamanho;
 }
 
-void imprime_lista_ligada(ListaLigada * lista){
-
-	NoLista * p;
-
-	printf("Lista:");
-
-	for(p = lista->primeiro; p; p = p->proximo){
-
-		printf(" %s", p->elemento->valor);
-	}
-
-	printf("\n");
-}
-
 NoLista * busca_lista_ligada(ListaLigada * lista, Elemento * e){
 	NoLista * p = lista->primeiro;
 
@@ -92,41 +78,3 @@ Boolean insere_lista_ligada(ListaLigada * lista, Elemento * e, Boolean semRepeti
 	return TRUE;
 }
 
-Boolean remove_elemento_lista_ligada(ListaLigada * lista, Elemento * e){
-
-	int i, antecessor;
-	int indice = busca_lista_ligada(lista, e);
-	NoLista * p;
-	NoLista * tmp;
-
-	if(indice >= 0) {
-
-		if(indice == 0){
-
-			tmp = lista->primeiro;
-			lista->primeiro = tmp->proximo;
-			free(tmp);
-		}
-		else{
-
-			i = 0;
-			antecessor = indice - 1;
-			p = lista->primeiro;
-
-			while(i < antecessor){
-
-				i++;
-				p = p->proximo;
-			}
-			
-			tmp = p->proximo;
-			p->proximo = tmp->proximo;
-			free(tmp);
-		}
-		
-    lista->tamanho--;
-		return TRUE;
-	}
-
-	return FALSE;
-}

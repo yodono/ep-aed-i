@@ -33,6 +33,7 @@ Boolean nornull(Elemento * a, Elemento * b);
 Boolean is_null(Elemento * e);
 
 void strlwr(char * s);
+int max(int a, int b);
 
 #endif
 

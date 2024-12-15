@@ -17,8 +17,7 @@ typedef struct {
 ListaLigada * cria_lista_ligada();
 void destroi_lista_ligada(ListaLigada * lista);
 int tamanho_lista_ligada(ListaLigada * lista);
-void imprime_lista_ligada(ListaLigada * lista);
 NoLista * busca_lista_ligada(ListaLigada * lista, Elemento * e);
 Boolean insere_sem_repeticao_lista_ligada(ListaLigada * lista, Elemento * e);
 Boolean insere_lista_ligada(ListaLigada * lista, Elemento * e, Boolean semRepeticao);
-Boolean remove_elemento_lista_ligada(ListaLigada * lista, Elemento * e);
+

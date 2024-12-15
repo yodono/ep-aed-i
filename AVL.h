@@ -15,15 +15,13 @@ typedef struct _no_arvore_ {
 } NoArvore;
 
 typedef struct {
-
-	NoArvore * raiz;
+	
+  NoArvore * raiz;
 
 } Arvore_AVL;
 
 Arvore_AVL * cria_arvore();
-void imprime_AVL(Arvore_AVL * arvore);
-
 NoArvore * busca_AVL(Arvore_AVL * arvore, Elemento * e);
 Boolean insere_AVL(Arvore_AVL * arvore, Elemento * e);
-Boolean remove_AVL(Arvore_AVL * arvore, Elemento * e);
+int balanco(NoArvore * no);
 
