@@ -23,7 +23,7 @@ typedef struct {
 } Arvore_AVL;
 
 Arvore_AVL * cria_arvore();
-NoArvore * busca_AVL(Arvore_AVL * arvore, Elemento * e);
+Elemento * busca_AVL(Arvore_AVL * arvore, Elemento * e);
 Boolean insere_AVL(Arvore_AVL * arvore, Elemento ** e);
 int balanco(NoArvore * no);
 

@@ -12,10 +12,10 @@ Arvore_AVL * cria_arvore(){
 	return arvore;
 }
 
-NoArvore * busca_AVL_rec(NoArvore * no, Elemento * e){
+Elemento * busca_AVL_rec(NoArvore * no, Elemento * e){
 
 	if(no){
-		if(eq(no->elemento, e)) return no;
+		if(eq(no->elemento, e)) return no->elemento;
 		if(lt(e, no->elemento)) return busca_AVL_rec(no->esq, e);
 		return busca_AVL_rec(no->dir, e);
 	}
@@ -23,7 +23,7 @@ NoArvore * busca_AVL_rec(NoArvore * no, Elemento * e){
 	return NULL;
 }
 
-NoArvore * busca_AVL(Arvore_AVL * arvore, Elemento * e){
+Elemento * busca_AVL(Arvore_AVL * arvore, Elemento * e){
 	
 	return busca_AVL_rec(arvore->raiz, e);	
 }

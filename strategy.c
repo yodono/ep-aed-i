@@ -7,19 +7,23 @@
 Indexador * cria_estrategia(char * tipo) {
 	Indexador * indexador = (Indexador *) malloc (sizeof(Indexador));
 
-  if (eq_char(tipo, "arvore")) {
-    puts("Tipo de indice: 'arvore'");     
+  printf("Tipo de indice: '%s'\n", tipo);
+
+  if (eq_char(tipo, ARVORE)) {
     indexador->estrutura = cria_arvore();
+    indexador->estrategia = ARVORE;
     indexador->insere = insere_AVL;
     indexador->busca = busca_AVL;
+    indexador->otimizar = null_fn;
     return indexador;
   }
 
-  if (eq_char(tipo, "lista")) {
-    puts("Tipo de indice: 'lista'");     
+  if (eq_char(tipo, LISTA)) {
     indexador->estrutura = cria_lista_ligada();
-    indexador->insere = insere_sem_repeticao_lista_ligada;  
-    indexador->busca = busca_lista_ligada;  
+    indexador->estrategia = LISTA;
+    indexador->insere = insere_lista_ligada;  
+    indexador->busca = busca_lista_ligada;
+    indexador->otimizar = otimizar_lista;
     return indexador;
   }
 
@@ -53,15 +57,15 @@ void menu_busca(Indexador * indexador) {
       aux->valor = argumento;
       strlwr(aux->valor);
       
-      NoGenerico * no = indexador->busca(indexador->estrutura, aux);
+      Elemento * elemento = indexador->busca(indexador->estrutura, aux);
 
-      if (no == NULL) {
+      if (elemento == NULL) {
         printf("Palavra '%s' nao encontrada.\n", argumento);
         continue;
       }
       
-      printf("Existem %d ocorrencias da palavra '%s' na(s) seguinte(s) linha(s):\n", no->elemento->quantidade, argumento);
-      imprime_occ(no->elemento->ocorrencias, indexador->lista_linhas);
+      printf("Existem %d ocorrencias da palavra '%s' na(s) seguinte(s) linha(s):\n", elemento->quantidade, argumento);
+      imprime_occ(elemento->ocorrencias, indexador->lista_linhas);
 
       continue;
     }
@@ -73,5 +77,21 @@ void menu_busca(Indexador * indexador) {
 
 void setListaLinhas(Indexador * indexador, char ** lista_linhas) {
   indexador->lista_linhas = lista_linhas;
+}
+
+void otimizar_lista(Indexador * indexador) {
+  ListaLigada * lista_ligada = indexador->estrutura;
+  int tamanho_lista = tamanho_lista_ligada(lista_ligada);
+
+  indexador->estrutura = cria_lista_sequencial(tamanho_lista);
+  indexador->busca = busca_lista_sequencial;
+
+  NoLista * p = lista_ligada->primeiro;
+  for (int i = 0; i < tamanho_lista; i++) {
+    insere_lista_sequencial(indexador->estrutura, p->elemento);
+    p = p->proximo;
+  }
+
+  destroi_lista_ligada(lista_ligada);
 }
 

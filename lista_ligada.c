@@ -31,21 +31,17 @@ int tamanho_lista_ligada(ListaLigada * lista){
   return lista->tamanho;
 }
 
-NoLista * busca_lista_ligada(ListaLigada * lista, Elemento * e){
+Elemento * busca_lista_ligada(ListaLigada * lista, Elemento * e){
 	NoLista * p = lista->primeiro;
 
 	while(p && lt(p->elemento, e)){
 		p = p->proximo;
 	}
 
-	return p ? (eq(p->elemento, e) ? p : NULL) : NULL;
+	return p ? (eq(p->elemento, e) ? p->elemento : NULL) : NULL;
 }
 
-Boolean insere_sem_repeticao_lista_ligada(ListaLigada * lista, Elemento ** e){
-  return insere_lista_ligada(lista, e, TRUE);
-}
-
-Boolean insere_lista_ligada(ListaLigada * lista, Elemento ** e, Boolean semRepeticao){
+Boolean insere_lista_ligada(ListaLigada * lista, Elemento ** e){
 
 	NoLista * p;
 	NoLista * anterior;
@@ -57,7 +53,7 @@ Boolean insere_lista_ligada(ListaLigada * lista, Elemento ** e, Boolean semRepet
 
 	while(p){
 
-    if (eq(*e, p->elemento) && semRepeticao) {
+    if (eq(*e, p->elemento)) {
       free(novo);
       *e = p->elemento;
       return FALSE;

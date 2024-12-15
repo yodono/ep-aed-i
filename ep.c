@@ -7,8 +7,6 @@
 #include "strategy.h"
 #include "lista_occ.h"
 
-#define TAMANHO 10000
-
 int main(int argc, char ** argv){
 
 	FILE * in;
@@ -69,7 +67,7 @@ int main(int argc, char ** argv){
           novo_elemento->ocorrencias = cria_lista_occ();
         }
         
-        insere_occ_sem_repeticao(novo_elemento->ocorrencias, contador_linha);
+        insere_occ(novo_elemento->ocorrencias, contador_linha);
         novo_elemento->quantidade++;
 				
         printf("\t\t'%s'\n", palavra);
@@ -80,6 +78,7 @@ int main(int argc, char ** argv){
 
 		printf(">>>>> Arquivo carregado!\n\n\n");
 
+    indexador->otimizar(indexador);
     setListaLinhas(indexador, lista_linhas);
     menu_busca(indexador);
     
@@ -91,19 +90,5 @@ int main(int argc, char ** argv){
 	}
 
 	exit(1);
-}
-
-int conta_linhas (FILE * in) {
-  char * _linha = (char *) malloc((TAMANHO + 1) * sizeof(char));
-  int count = 0;
-	char * quebra_de_linha;
-  
-  while(in && fgets(_linha, TAMANHO, in)) {
-		if( (quebra_de_linha = strrchr(_linha, '\n')) ) *quebra_de_linha = 0;
-    count++;
-  }
-  
-  fclose(in);
-  return count;
 }
 

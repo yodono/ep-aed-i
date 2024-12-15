@@ -13,19 +13,9 @@ ListaSequencial * cria_lista_sequencial(int capacidade){
 	return lista;
 }
 
-void destroi_lista_sequencial(ListaSequencial * lista){
-	free(lista->a);
-	free(lista);
-}
-
-int tamanho_lista_sequencial(ListaSequencial * lista){
-	return lista->livre;
-}
-
-int busca_lista_sequencial(ListaSequencial * lista, Elemento * e){
-
-	// busca binária! ;)
-
+Elemento * busca_lista_sequencial(ListaSequencial * lista, Elemento * e){
+	
+  // busca binária! ;)
 	int ini = 0;
 	int fim = lista->livre - 1;
 	int meio;
@@ -34,12 +24,12 @@ int busca_lista_sequencial(ListaSequencial * lista, Elemento * e){
 
 		meio = (ini + fim) / 2;
 
-		if(eq(e, lista->a[meio])) return meio;
-		if(lt(e, lista->a[meio])) fim = meio - 1;
+		if(eq(e, lista->a[meio])) return lista->a[meio];
+    if(lt(e, lista->a[meio])) fim = meio - 1;
 		if(gt(e, lista->a[meio])) ini = meio + 1;
 	}
 		
-	return -1;
+	return NULL;
 }
 
 Boolean insere_lista_sequencial(ListaSequencial * lista, Elemento * e){
