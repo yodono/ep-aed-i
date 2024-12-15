@@ -1,5 +1,7 @@
 *
 !*.c
 !*.h
+!*.txt
+!*.md
 !Makefile
 
