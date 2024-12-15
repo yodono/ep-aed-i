@@ -1,13 +1,12 @@
 #include <stdlib.h> 
 #include <stdio.h> 
 #include <string.h> 
+#include <time.h> 
 
 #include "indexador.h"
 
 Indexador * cria_estrategia(char * tipo) {
 	Indexador * indexador = (Indexador *) malloc (sizeof(Indexador));
-
-  printf("Tipo de indice: '%s'\n", tipo);
 
   if (eq_char(tipo, ARVORE)) {
     indexador->estrutura = cria_arvore();
@@ -15,6 +14,7 @@ Indexador * cria_estrategia(char * tipo) {
     indexador->insere = insere_AVL;
     indexador->busca = busca_AVL;
     indexador->otimizar = null_fn;
+    indexador->imprimir_detalhes = imprimir_detalhes_arvore;
     return indexador;
   }
 
@@ -24,6 +24,7 @@ Indexador * cria_estrategia(char * tipo) {
     indexador->insere = insere_lista_ligada;  
     indexador->busca = busca_lista_ligada;
     indexador->otimizar = otimizar_lista;
+    indexador->imprimir_detalhes = null_fn;
     return indexador;
   }
 
@@ -48,12 +49,15 @@ void menu_busca(Indexador * indexador) {
     int argumentosLidos = sscanf(input, "%s %s", comando, argumento);
 
     if (argumentosLidos == 1 && eq_char(comando, "fim")) {
-      puts("Encerrando o programa...");
+      // puts("Encerrando o programa...");
       break;
     }
         
     if (argumentosLidos == 2 && eq_char(comando, "busca")) {
-	    Elemento * aux = (Elemento *) malloc (sizeof(Elemento));
+      double tempo_busca, tempo_diff;
+      tempo_busca = clock();
+	    
+      Elemento * aux = (Elemento *) malloc (sizeof(Elemento));
       aux->valor = argumento;
       strlwr(aux->valor);
       
@@ -61,16 +65,23 @@ void menu_busca(Indexador * indexador) {
 
       if (elemento == NULL) {
         printf("Palavra '%s' nao encontrada.\n", argumento);
+        
+        tempo_diff = clock() - tempo_busca;
+        printf("Tempo de busca: %.3lf ms\n", tempo_diff);
+        
         continue;
       }
       
       printf("Existem %d ocorrencias da palavra '%s' na(s) seguinte(s) linha(s):\n", elemento->quantidade, argumento);
       imprime_occ(elemento->ocorrencias, indexador->lista_linhas);
 
+      tempo_diff = clock() - tempo_busca;
+      printf("Tempo de busca: %.3lf ms\n", tempo_diff);
+      
       continue;
     }
       
-    puts("Comando inválido. Use 'busca <palavra>' ou 'fim'.");
+    puts("Opcao invalida!");
     continue;
   } 
 }
@@ -93,5 +104,11 @@ void otimizar_lista(Indexador * indexador) {
   }
 
   destroi_lista_ligada(lista_ligada);
+}
+
+void imprimir_detalhes_arvore(Indexador * indexador) {
+  int altura = (( Arvore_AVL *) indexador->estrutura)->raiz->h;
+
+  printf("Altura da arvore: %d\n", altura);
 }
 

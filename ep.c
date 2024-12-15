@@ -2,30 +2,40 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h> 
 
 #include "lib/indexador.h"
 
 int main(int argc, char ** argv){
 
 	FILE * in;
+  char * nome_arquivo;
 	char * linha;
 	char * copia_ponteiro_linha;
 	char * quebra_de_linha;
 	char * palavra;	
 	int contador_linha;
+  int total_linhas;
+  int total_palavras_indexadas = 0;
+
+  double tempo_construcao, tempo_diff;
 
 	if(argc == 3) {
 
+    tempo_construcao = clock();
+
+    nome_arquivo = argv[1];
+
     // lendo total de linhas
-		in = fopen(argv[1], "r");
-    int total_linhas = conta_linhas(in);
+		in = fopen(nome_arquivo, "r");
+    total_linhas = conta_linhas(in);
 		char * lista_linhas[total_linhas];
 
     // carregando arquivo
-		in = fopen(argv[1], "r");
+		in = fopen(nome_arquivo, "r");
     Indexador * indexador = cria_estrategia(argv[2]);
 
-		printf(">>>>> Carregando arquivo...\n");
+		// printf(">>>>> Carregando arquivo...\n");
 
     contador_linha = 0;
  		linha = (char *) malloc((TAMANHO + 1) * sizeof(char));
@@ -34,7 +44,7 @@ int main(int argc, char ** argv){
 			
 			if( (quebra_de_linha = strrchr(linha, '\n')) ) *quebra_de_linha = 0;
 
-			printf("linha %03d: '%s'\n", contador_linha + 1, linha);
+			// printf("linha %03d: '%s'\n", contador_linha + 1, linha);
 
 			// fazemos uma copia do endereço que corresponde ao array de chars 
 			// usado para armazenar cada linha lida do arquivo pois a função 'strsep' 
@@ -67,22 +77,32 @@ int main(int argc, char ** argv){
         
         insere_occ(novo_elemento->ocorrencias, contador_linha);
         novo_elemento->quantidade++;
+        
+        total_palavras_indexadas++;
 				
-        printf("\t\t'%s'\n", palavra);
+        // printf("\t\t'%s'\n", palavra);
 			}
 
 			contador_linha++;
 		}
 
-		printf(">>>>> Arquivo carregado!\n\n\n");
-
+		// printf(">>>>> Arquivo carregado!\n\n\n");
+    
     indexador->otimizar(indexador);
     setListaLinhas(indexador, lista_linhas);
+    
+    tempo_diff = clock() - tempo_construcao;
+
+    printf("Arquivo: '%s'\n", nome_arquivo);
+    printf("Tipo de indice: '%s'\n", indexador->estrategia);
+    printf("Numero de linhas no arquivo: '%d'\n", total_linhas);
+    printf("Total de palavras indexadas: '%d'\n", total_palavras_indexadas);
+    indexador->imprimir_detalhes(indexador);
+    printf("Tempo de carga do arquivo e construcao do indice: %.3lf ms\n", tempo_diff);
+    
     menu_busca(indexador);
     
-    // TODO: copiar lista ligada p lista sequencial
-
-		printf("\n\n\n>>>>>Fim teste!\n\n\n");
+		// printf("\n\n\n>>>>>Fim teste!\n\n\n");
 		fclose(in);
     exit(0);
 	}
