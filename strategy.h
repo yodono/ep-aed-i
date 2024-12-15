@@ -2,6 +2,7 @@
 #define INDEXADOR_H
 #define MAX_INPUT 100
 
+#include "utils.h"
 #include "types.h"
 #include "comparador.h"
 #include "AVL.h"

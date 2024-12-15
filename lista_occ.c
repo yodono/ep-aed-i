@@ -40,7 +40,8 @@ void imprime_occ(ListaOcc * lista){
   No_occ * p; 
 
   for(p = lista->primeiro; p; p = p->proximo){
-    printf("%05d", p->valor);
+    // soma uma unidade para o valor "apresentavel" da linha
+    printf("%05d", p->valor + 1);
   }
 
   printf("\n");

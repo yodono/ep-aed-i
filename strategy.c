@@ -51,6 +51,7 @@ void menu_busca(Indexador * indexador) {
     if (argumentosLidos == 2 && eq_char(comando, "busca")) {
 	    Elemento * aux = (Elemento *) malloc (sizeof(Elemento));
       aux->valor = argumento;
+      strlwr(aux->valor);
       
       NoGenerico * no = indexador->busca(indexador->estrutura, aux);
 

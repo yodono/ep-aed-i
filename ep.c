@@ -61,13 +61,13 @@ int main(int argc, char ** argv){
         if(indexador->insere(indexador->estrutura, novo_elemento)) {
           novo_elemento->ocorrencias = cria_lista_occ();
           insere_occ(novo_elemento->ocorrencias, contador_linha);
+          novo_elemento->quantidade++;
         } else {
+          novo_elemento->quantidade++;
           free(novo_elemento);
         }
-        
-        novo_elemento->quantidade++;
-
-				printf("\t\t'%s'\n", palavra);
+				
+        printf("\t\t'%s'\n", palavra);
 			}
 
 			contador_linha++;
