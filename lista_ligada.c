@@ -41,29 +41,29 @@ NoLista * busca_lista_ligada(ListaLigada * lista, Elemento * e){
 	return p ? (eq(p->elemento, e) ? p : NULL) : NULL;
 }
 
-Boolean insere_sem_repeticao_lista_ligada(ListaLigada * lista, Elemento * e){
+Boolean insere_sem_repeticao_lista_ligada(ListaLigada * lista, Elemento ** e){
   return insere_lista_ligada(lista, e, TRUE);
 }
 
-Boolean insere_lista_ligada(ListaLigada * lista, Elemento * e, Boolean semRepeticao){
+Boolean insere_lista_ligada(ListaLigada * lista, Elemento ** e, Boolean semRepeticao){
 
 	NoLista * p;
 	NoLista * anterior;
 	NoLista * novo = (NoLista *) malloc(sizeof(NoLista));
 
-	novo->elemento = e;
+	novo->elemento = *e;
 	anterior = NULL;
 	p = lista->primeiro;
 
 	while(p){
 
-    if (eq(e, p->elemento) && semRepeticao) {
+    if (eq(*e, p->elemento) && semRepeticao) {
       free(novo);
-      e = p->elemento;
+      *e = p->elemento;
       return FALSE;
     }
 
-		if(lt(e, p->elemento)) break;
+		if(lt(*e, p->elemento)) break;
 
 		anterior = p;
 		p = p->proximo;

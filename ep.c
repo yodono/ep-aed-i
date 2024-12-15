@@ -58,14 +58,12 @@ int main(int argc, char ** argv){
 
         // indexador->insere retorna TRUE caso o elemento seja novo, FALSE do contrario
         // indexador->insere atualiza o ponteiro do novo_elemento para o elemento existente caso haja
-        if(indexador->insere(indexador->estrutura, novo_elemento)) {
+        if(indexador->insere(indexador->estrutura, &novo_elemento)) {
           novo_elemento->ocorrencias = cria_lista_occ();
-          insere_occ(novo_elemento->ocorrencias, contador_linha);
-          novo_elemento->quantidade++;
-        } else {
-          novo_elemento->quantidade++;
-          free(novo_elemento);
         }
+        
+        insere_occ_sem_repeticao(novo_elemento->ocorrencias, contador_linha);
+        novo_elemento->quantidade++;
 				
         printf("\t\t'%s'\n", palavra);
 			}

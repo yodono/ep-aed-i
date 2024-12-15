@@ -168,11 +168,11 @@ Boolean insere_AVL_rec(Arvore_AVL * arvore, NoArvore * raiz, NoArvore * pai, NoA
 	return FALSE;
 }
 
-Boolean insere_AVL(Arvore_AVL * arvore, Elemento * e){
+Boolean insere_AVL(Arvore_AVL * arvore, Elemento ** e){
 
 	NoArvore * novo = (NoArvore *) malloc(sizeof(NoArvore));
 	
-	novo->elemento = e;
+	novo->elemento = *e;
 	novo->esq = novo->dir = NULL;
 	novo->h = 0;
 

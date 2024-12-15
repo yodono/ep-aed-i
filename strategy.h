@@ -15,7 +15,7 @@ typedef struct {
 
 typedef struct {
     void * estrutura;
-    Boolean (* insere)(void * estrutura, Elemento * e);
+    Boolean (* insere)(void * estrutura, Elemento ** e);
     NoGenerico * (* busca)(void * estrutura, Elemento * e);
 } Indexador;
 
