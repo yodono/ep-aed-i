@@ -3,5 +3,6 @@
 !*.h
 !*.txt
 !*.md
+!lib/
 !Makefile
 

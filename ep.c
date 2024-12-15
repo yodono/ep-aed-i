@@ -3,9 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "utils.h"
-#include "indexador.h"
-#include "lista_occ.h"
+#include "lib/indexador.h"
 
 int main(int argc, char ** argv){
 
