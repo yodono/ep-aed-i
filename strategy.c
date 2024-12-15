@@ -6,7 +6,7 @@
 
 Indexador * cria_estrategia(char * tipo) {
 	Indexador * indexador = (Indexador *) malloc (sizeof(Indexador));
-	
+
   if (eq_char(tipo, "arvore")) {
     puts("Tipo de indice: 'arvore'");     
     indexador->estrutura = cria_arvore();
@@ -61,7 +61,7 @@ void menu_busca(Indexador * indexador) {
       }
       
       printf("Existem %d ocorrencias da palavra '%s' na(s) seguinte(s) linha(s):\n", no->elemento->quantidade, argumento);
-      imprime_occ(no->elemento->ocorrencias);
+      imprime_occ(no->elemento->ocorrencias, indexador->lista_linhas);
 
       continue;
     }
@@ -69,5 +69,9 @@ void menu_busca(Indexador * indexador) {
     puts("Comando inválido. Use 'busca <palavra>' ou 'fim'.");
     continue;
   } 
+}
+
+void setListaLinhas(Indexador * indexador, char ** lista_linhas) {
+  indexador->lista_linhas = lista_linhas;
 }
 

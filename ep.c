@@ -20,12 +20,18 @@ int main(int argc, char ** argv){
 
 	if(argc == 3) {
 
+    // lendo total de linhas
+		in = fopen(argv[1], "r");
+    int total_linhas = conta_linhas(in);
+		char * lista_linhas[total_linhas];
+
+    // carregando arquivo
 		in = fopen(argv[1], "r");
     Indexador * indexador = cria_estrategia(argv[2]);
 
 		printf(">>>>> Carregando arquivo...\n");
 
-		contador_linha = 0;
+    contador_linha = 0;
  		linha = (char *) malloc((TAMANHO + 1) * sizeof(char));
 
 		while(in && fgets(linha, TAMANHO, in)){
@@ -40,7 +46,8 @@ int main(int argc, char ** argv){
 			// não queremos que 'linha' deixe de apontar para o inicio do array).
 
 			copia_ponteiro_linha = linha;
-
+      strcpy(lista_linhas[contador_linha], linha);
+      
       char * delim = " -";
 			while( (palavra = strsep(&copia_ponteiro_linha, delim)) ){
 				// antes de guardar a palavra em algum tipo de estrutura usada
@@ -73,13 +80,30 @@ int main(int argc, char ** argv){
 
 		printf(">>>>> Arquivo carregado!\n\n\n");
 
+    setListaLinhas(indexador, lista_linhas);
     menu_busca(indexador);
     
     // TODO: copiar lista ligada p lista sequencial
 
 		printf("\n\n\n>>>>>Fim teste!\n\n\n");
-		return 0;
+		fclose(in);
+    exit(0);
 	}
 
-	return 1;
+	exit(1);
 }
+
+int conta_linhas (FILE * in) {
+  char * _linha = (char *) malloc((TAMANHO + 1) * sizeof(char));
+  int count = 0;
+	char * quebra_de_linha;
+  
+  while(in && fgets(_linha, TAMANHO, in)) {
+		if( (quebra_de_linha = strrchr(_linha, '\n')) ) *quebra_de_linha = 0;
+    count++;
+  }
+  
+  fclose(in);
+  return count;
+}
+

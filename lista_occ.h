@@ -5,7 +5,7 @@
 #include "comparador.h"
 
 ListaOcc * cria_lista_occ();
-void imprime_occ(ListaOcc * lista);
+void imprime_occ(ListaOcc * lista, char ** lista_linhas);
 Boolean insere_occ_sem_repeticao(ListaOcc * lista, int l);
 Boolean insere_occ(ListaOcc * lista, int l, Boolean semRepeticao);
 

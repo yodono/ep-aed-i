@@ -15,12 +15,14 @@ typedef struct {
 
 typedef struct {
     void * estrutura;
+    char ** lista_linhas;
     Boolean (* insere)(void * estrutura, Elemento ** e);
     NoGenerico * (* busca)(void * estrutura, Elemento * e);
 } Indexador;
 
 Indexador * cria_estrategia(char * tipo);
 void menu_busca(Indexador * indexador);
+void setListaLinhas(Indexador * indexador, char ** lista_linhas);
 
 #endif
 

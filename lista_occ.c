@@ -45,12 +45,12 @@ Boolean insere_occ(ListaOcc * lista, int l, Boolean semRepeticao){
 	return TRUE;
 }
 
-void imprime_occ(ListaOcc * lista){
+void imprime_occ(ListaOcc * lista, char ** lista_linhas){
   No_occ * p; 
 
   for(p = lista->primeiro; p; p = p->proximo){
     // soma uma unidade para o valor "apresentavel" da linha
-    printf("%05d\n", p->valor + 1);
+    printf("%05d %s \n", p->valor + 1, lista_linhas[p->valor]);
   }
 }
 
