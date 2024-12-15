@@ -1,4 +1,5 @@
-#include "utils.h"
+#include "types.h"
+#include "comparador.h"
 
 typedef struct _no_ {
 

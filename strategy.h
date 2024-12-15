@@ -2,9 +2,11 @@
 #define INDEXADOR_H
 #define MAX_INPUT 100
 
-#include "utils.h"
+#include "types.h"
+#include "comparador.h"
 #include "AVL.h"
 #include "lista_ligada.h"
+#include "lista_occ.h"
 
 typedef struct {
   Elemento * elemento;
@@ -13,7 +15,6 @@ typedef struct {
 typedef struct {
     void * estrutura;
     Boolean (* insere)(void * estrutura, Elemento * e);
-    void (* imprime)(void * estrutura);
     NoGenerico * (* busca)(void * estrutura, Elemento * e);
 } Indexador;
 

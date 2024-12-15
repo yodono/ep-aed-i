@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "utils.h"
 #include "strategy.h"
 #include "lista_occ.h"
 

@@ -1,4 +1,6 @@
 #include "utils.h"
+#include "types.h"
+#include "comparador.h"
 
 #define INDEFINIDO -1
 #define ESQUERDO 0

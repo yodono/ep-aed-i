@@ -1,5 +1,5 @@
 #include <string.h>
-#include "utils.h"
+#include "comparador.h"
 
 Boolean eq_char(char * a, char * b) {
   return strcmp(a, b) == 0;

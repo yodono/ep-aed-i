@@ -3,7 +3,6 @@
 #include <string.h> 
 
 #include "strategy.h"
-#include "lista_occ.h"
 
 Indexador * cria_estrategia(char * tipo) {
 	Indexador * indexador = (Indexador *) malloc (sizeof(Indexador));
@@ -12,7 +11,6 @@ Indexador * cria_estrategia(char * tipo) {
     puts("Tipo de indice: 'arvore'");     
     indexador->estrutura = cria_arvore();
     indexador->insere = insere_AVL;
-    indexador->imprime = imprime_AVL;
     indexador->busca = busca_AVL;
     return indexador;
   }
@@ -21,7 +19,6 @@ Indexador * cria_estrategia(char * tipo) {
     puts("Tipo de indice: 'lista'");     
     indexador->estrutura = cria_lista_ligada();
     indexador->insere = insere_sem_repeticao_lista_ligada;  
-    indexador->imprime = imprime_lista_ligada;  
     indexador->busca = busca_lista_ligada;  
     return indexador;
   }

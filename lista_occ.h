@@ -1,7 +1,8 @@
 #ifndef LISTA_OCC_H
 #define LISTA_OCC_H
 
-#include "utils.h"
+#include "types.h"
+#include "comparador.h"
 
 ListaOcc * cria_lista_occ();
 void imprime_occ(ListaOcc * lista);
