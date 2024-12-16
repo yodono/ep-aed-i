@@ -8,6 +8,11 @@ palavra ocorre.
 
 Esse código utiliza estruturas de dados base disponibilizadas durante o oferecimento da disciplina ACH2023 de 2024.
 
+## Alunos
+Victor Yodono - 13829040 
+Kevin Rodrigues Nunes - 15676030 
+João Pedro Nunes Aquino - 15463492
+
 ## Como compilar
 Segue um exemplo de como compilar o código usando o `gcc`.
 O conteúdo principal está contido no arquivo `ep.c`.
