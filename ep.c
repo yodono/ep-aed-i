@@ -52,7 +52,7 @@ int main(int argc, char ** argv){
 			// não queremos que 'linha' deixe de apontar para o inicio do array).
 
 			copia_ponteiro_linha = linha;
-      lista_linhas[contador_linha] = (char ) malloc((strlen(linha) + 1) sizeof(char));
+      lista_linhas[contador_linha] = (char *) malloc((strlen(linha) + 1) * sizeof(char));
       strcpy(lista_linhas[contador_linha], linha);
       
       char * delim = " -,.;!':?";

@@ -72,10 +72,10 @@ void menu_busca(Indexador * indexador) {
         continue;
       }
       
-      printf("Existem %d ocorrencias da palavra '%s' na(s) seguinte(s) linha(s):\n", elemento->quantidade, argumento);
-      imprime_occ(elemento->ocorrencias, indexador->lista_linhas);
-
       tempo_diff = clock() - tempo_busca;
+      printf("Existem %d ocorrencias da palavra '%s' na(s) seguinte(s) linha(s):\n", elemento->quantidade, argumento);
+
+      imprime_occ(elemento->ocorrencias, indexador->lista_linhas);
       printf("Tempo de busca: %.3lf ms\n", tempo_diff);
       
       continue;
