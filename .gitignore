@@ -3,6 +3,8 @@
 !*.h
 !*.txt
 !*.md
+!*.pdf
 !lib/
+!testes/
 !Makefile
 
